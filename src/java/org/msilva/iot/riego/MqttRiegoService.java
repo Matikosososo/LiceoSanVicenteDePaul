@@ -40,7 +40,7 @@ public class MqttRiegoService {
             client = new MqttClient(SERVIDOR + MQTT_PORT, MqttClient.generateClientId(), new MemoryPersistence());
             client.connect();
             
-            client.publish("led/estado1", new MqttMessage(new Integer(1).toString().getBytes()));
+            client.publish("led/estado1", new MqttMessage(new Integer(0).toString().getBytes()));
             
             client.disconnect();
             client.close();
@@ -55,7 +55,7 @@ public class MqttRiegoService {
             client = new MqttClient(SERVIDOR + MQTT_PORT, MqttClient.generateClientId(), new MemoryPersistence());
             client.connect();
             
-            client.publish("led/estado1", new MqttMessage(new Integer(0).toString().getBytes()));
+            client.publish("led/estado1", new MqttMessage(new Integer(1).toString().getBytes()));
             
             client.disconnect();
             client.close();

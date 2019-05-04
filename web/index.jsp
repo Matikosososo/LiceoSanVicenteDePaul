@@ -19,7 +19,7 @@
     <body>
         <div class="container">
             <input id="swtPrueba" type="checkbox" checked data-toggle="toggle" data-width="100" data-height="75" data-onstyle="info">
-            <div id="eventoReigo">Estado: Apagado</div>
+            <div id="eventoReigo"></div>
         </div>
     </body>
     <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
@@ -29,12 +29,41 @@
     <script src="js/sweetalert.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
     <script>
+
+        $(document).ready(function () {
+            
+            
+        });
+        
+        
         $(function () {
             $('#swtPrueba').change(function () {
-                if (!$(this).prop('checked')) {
-                    $('#eventoReigo').html('Estado: Encendido');
+                var estado = $(this).prop('checked');
+                if (!estado) {
+                    
+                    $.ajax({
+                        url: './MqttRequestResponseServlet',
+                        type: "POST",
+                        data: {
+                            estado: estado
+                        },
+                        success: function (datos) {
+                            $('#eventoReigo').html('Estado: Encendido');
+                        }
+                    });
+                    
                 } else {
-                    $('#eventoReigo').html('Estado: Apagado');
+                    $.ajax({
+                        url: './MqttRequestResponseServlet',
+                        type: "POST",
+                        data: {
+                            estado: estado
+                        },
+                        success: function (datos) {
+                            $('#eventoReigo').html('Estado: Apagado');
+                        }
+                    });
+                    
                 }
             });
         });

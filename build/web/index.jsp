@@ -31,28 +31,32 @@
     <script>
 
         $(document).ready(function () {
-            
-            
+            setearToggle();
         });
-        
-        
+
+        function setearToggle(){
+            $.ajax({
+                url: './ThingSpeakResponseServlet',
+                type: "POST",
+                success: function (datos) {
+                    console.log(datos);
+                    if(datos==1){
+                        $("#swtPrueba").bootstrapToggle('off');
+                        $('#eventoReigo').html('Estado: Encendido');
+                    }else{
+                        $("#swtPrueba").bootstrapToggle('on');
+                        $('#eventoReigo').html('Estado: Apagado');
+                    }
+                    
+                }
+            });
+        }
+
         $(function () {
             $('#swtPrueba').change(function () {
                 var estado = $(this).prop('checked');
-                if (!estado) {
-                    
-                    $.ajax({
-                        url: './MqttRequestResponseServlet',
-                        type: "POST",
-                        data: {
-                            estado: estado
-                        },
-                        success: function (datos) {
-                            $('#eventoReigo').html('Estado: Encendido');
-                        }
-                    });
-                    
-                } else {
+                if (estado) {
+
                     $.ajax({
                         url: './MqttRequestResponseServlet',
                         type: "POST",
@@ -63,7 +67,18 @@
                             $('#eventoReigo').html('Estado: Apagado');
                         }
                     });
-                    
+                } else {
+                    $.ajax({
+                        url: './MqttRequestResponseServlet',
+                        type: "POST",
+                        data: {
+                            estado: estado
+                        },
+                        success: function (datos) {
+                            $('#eventoReigo').html('Estado: Encendido');
+                        }
+                    });
+
                 }
             });
         });

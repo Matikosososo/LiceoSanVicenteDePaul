@@ -22,7 +22,7 @@ public class MqttRiegoService {
    
     //-------------------------------------------------------------------------
 
-    public static String activarRiego(boolean activar){
+    public static boolean activarRiego(boolean activar){
         if( (System.currentTimeMillis() - lastMillis > allowedMillis) || lastMillis == 0){
             if(activar){
                 activarRiego();
@@ -30,9 +30,9 @@ public class MqttRiegoService {
                 desactivarRiego();
             }
             lastMillis = System.currentTimeMillis();
-            return "Ok";
+            return true;
         }
-        return "no te pases";
+        return false;
     }
 
     private static void activarRiego(){

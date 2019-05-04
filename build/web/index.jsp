@@ -18,7 +18,9 @@
     </head>
     <body>
         <div class="container">
-            <input id="swtPrueba" type="checkbox" checked data-toggle="toggle" data-width="100" data-height="75" data-onstyle="info">
+            <div id="toggleRiego">
+                <input id='swtPrueba' type='checkbox' checked data-toggle='toggle' data-width='100' data-height='75' data-onstyle='info'>
+            </div>
             <div id="eventoReigo"></div>
         </div>
     </body>
@@ -34,29 +36,35 @@
             setearToggle();
         });
 
-        function setearToggle(){
+        function setearToggle() {
             $.ajax({
                 url: './ThingSpeakResponseServlet',
                 type: "POST",
                 success: function (datos) {
                     console.log(datos);
-                    if(datos==1){
+                    if (datos == 1) {
+                        //document.getElementById("toggleRiego").innerHTML = ("<input id='swtPrueba' type='checkbox' data-toggle='toggle' data-width='100' data-height='75' data-onstyle='info'>");
+                        //$("#toggleRiego").html('<input id="swtPrueba" type="checkbox" data-toggle="toggle" data-width="100" data-height="75" data-onstyle="info" >');
                         $("#swtPrueba").bootstrapToggle('off');
                         $('#eventoReigo').html('Estado: Encendido');
-                    }else{
+                    } else {
+                        //document.getElementById("toggleRiego").innerHTML = ("<input id='swtPrueba' type='checkbox' checked data-toggle='toggle' data-width='100' data-height='75' data-onstyle='info'>");
+                        //$("#toggleRiego").html('<input id="swtPrueba" type="checkbox"  data-toggle="toggle" data-width="100" data-height="75" data-onstyle="info" >');
                         $("#swtPrueba").bootstrapToggle('on');
                         $('#eventoReigo').html('Estado: Apagado');
                     }
-                    
+
                 }
             });
         }
+
+
+        
 
         $(function () {
             $('#swtPrueba').change(function () {
                 var estado = $(this).prop('checked');
                 if (estado) {
-
                     $.ajax({
                         url: './MqttRequestResponseServlet',
                         type: "POST",
@@ -64,7 +72,10 @@
                             estado: estado
                         },
                         success: function (datos) {
-                            $('#eventoReigo').html('Estado: Apagado');
+                            if (datos) {
+
+                                $('#eventoReigo').html('Estado: Apagado');
+                            }
                         }
                     });
                 } else {
@@ -75,7 +86,11 @@
                             estado: estado
                         },
                         success: function (datos) {
-                            $('#eventoReigo').html('Estado: Encendido');
+                            if (datos) {
+
+                                $('#eventoReigo').html('Estado: Encendido');
+                            }
+
                         }
                     });
 

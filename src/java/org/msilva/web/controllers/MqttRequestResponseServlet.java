@@ -31,7 +31,9 @@ public class MqttRequestResponseServlet extends HttpServlet {
             throws ServletException, IOException {
         String estado = request.getParameter("estado");
         Boolean activar = Boolean.valueOf(estado);
-        MqttRiegoService.activarRiego(activar);
+        try (PrintWriter out = response.getWriter()) {
+            out.print(MqttRiegoService.activarRiego(activar));
+        }    
     }
 
     

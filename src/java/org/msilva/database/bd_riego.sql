@@ -36,7 +36,7 @@ create table historialSensores(
 	PRIMARY KEY(id),
 	FOREIGN KEY(lugar_fk) REFERENCES invernadero(id),
     FOREIGN KEY(sensor1_fk) REFERENCES sensorHyT(id),
-    FOREIGN KEY(sensor2_fk) REFERENCES sensorHT(id),
+    FOREIGN KEY(sensor2_fk) REFERENCES sensorHT(id)
 );
 
 create table historialRiego(

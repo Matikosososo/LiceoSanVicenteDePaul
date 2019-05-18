@@ -73,7 +73,6 @@
                         },
                         success: function (datos) {
                             if (datos) {
-
                                 $('#eventoReigo').html('Estado: Apagado');
                             }
                         }
